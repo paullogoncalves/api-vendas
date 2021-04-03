@@ -21,8 +21,8 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Optional<Categoria>> getCategoria(@PathVariable(name = "id") Integer id) {
-		Optional<Categoria> categoria = service.getCategoria(id);
+	public ResponseEntity <Categoria> getCategoria(@PathVariable(name = "id") Integer id) {
+		Categoria categoria = service.getCategoria(id);
 		
 		
 		return ResponseEntity.ok().body(categoria);
