@@ -3,10 +3,12 @@ package com.prgjesusindustry.apivendas.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Pedido implements Serializable {
@@ -18,6 +20,7 @@ public class Pedido implements Serializable {
 
 	private LocalDateTime instante;
 
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
 	private Cliente cliente;
