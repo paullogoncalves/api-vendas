@@ -1,5 +1,7 @@
 	 package com.prgjesusindustry.apivendas;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,20 @@ import com.prgjesusindustry.apivendas.domain.Cidade;
 import com.prgjesusindustry.apivendas.domain.Cliente;
 import com.prgjesusindustry.apivendas.domain.Endereco;
 import com.prgjesusindustry.apivendas.domain.Estado;
+import com.prgjesusindustry.apivendas.domain.Pagamento;
+import com.prgjesusindustry.apivendas.domain.PagamentoComBoleto;
+import com.prgjesusindustry.apivendas.domain.PagamentoComCartao;
+import com.prgjesusindustry.apivendas.domain.Pedido;
 import com.prgjesusindustry.apivendas.domain.Produto;
+import com.prgjesusindustry.apivendas.domain.enums.EstadoPagamento;
 import com.prgjesusindustry.apivendas.domain.enums.TipoCliente;
 import com.prgjesusindustry.apivendas.repositories.CategoriaRepository;
 import com.prgjesusindustry.apivendas.repositories.CidadeRepository;
 import com.prgjesusindustry.apivendas.repositories.ClienteRepository;
 import com.prgjesusindustry.apivendas.repositories.EnderecoRepository;
 import com.prgjesusindustry.apivendas.repositories.EstadoRepository;
+import com.prgjesusindustry.apivendas.repositories.PagamentoRepository;
+import com.prgjesusindustry.apivendas.repositories.PedidoRepository;
 import com.prgjesusindustry.apivendas.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,6 +50,12 @@ public class ApiVendasApplication implements CommandLineRunner{
 	
 	@Autowired
 	private EnderecoRepository enderecoRepo;
+	
+	@Autowired
+	private PedidoRepository pedidoRepo;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiVendasApplication.class, args);
@@ -93,6 +108,24 @@ public class ApiVendasApplication implements CommandLineRunner{
 		clienteRepo.save(cli1);
 		
 		enderecoRepo.saveAll(Arrays.asList(e1, e2));
+		
+		DateTimeFormatter formaDt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		
+		//LocalDateTime hora = LocalDateTime.parse("06/04/2021 14:00", formaDt);
+		
+		Pedido ped1 = new Pedido(null, LocalDateTime.parse("06/04/2021 14:00", formaDt), cli1, e1);
+		Pedido ped2 = new Pedido(null, LocalDateTime.parse("01/04/2021 09:25", formaDt), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDateTime.parse("30/04/2021 09:25", formaDt), null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepo.saveAll(Arrays.asList(pagto1, pagto2));
 		
 	}
 

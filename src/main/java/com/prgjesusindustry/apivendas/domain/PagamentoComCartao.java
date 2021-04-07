@@ -1,17 +1,20 @@
 package com.prgjesusindustry.apivendas.domain;
 
+import javax.persistence.Entity;
+
 import com.prgjesusindustry.apivendas.domain.enums.EstadoPagamento;
 
-public class PagamentoComCartão extends Pagamento{
+@Entity
+public class PagamentoComCartao extends Pagamento{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer numerosDeParcelas;
 	
-	public PagamentoComCartão() {
+	public PagamentoComCartao() {
 		
 	}
 
-	public PagamentoComCartão(Integer id, EstadoPagamento estado, Pedido pedido, 
+	public PagamentoComCartao(Integer id, EstadoPagamento estado, Pedido pedido, 
 			Integer numerosDeParcelas) {
 		super(id, estado, pedido);
 		this.numerosDeParcelas = numerosDeParcelas;
