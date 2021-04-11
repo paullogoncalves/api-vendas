@@ -1,6 +1,8 @@
 package com.prgjesusindustry.apivendas.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.prgjesusindustry.apivendas.domain.Categoria;
+import com.prgjesusindustry.apivendas.dto.CategoriaDTO;
 import com.prgjesusindustry.apivendas.services.CategoriaService;
 
 @RestController
@@ -23,6 +26,13 @@ public class CategoriaResource {
 	
 	@Autowired
 	private CategoriaService service;
+	
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity <Categoria> find(@PathVariable(name = "id") Integer id) {
@@ -49,4 +59,6 @@ public class CategoriaResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
 }
