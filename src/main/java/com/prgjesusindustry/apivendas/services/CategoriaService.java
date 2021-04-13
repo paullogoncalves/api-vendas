@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.prgjesusindustry.apivendas.domain.Categoria;
+import com.prgjesusindustry.apivendas.dto.CategoriaDTO;
 import com.prgjesusindustry.apivendas.repositories.CategoriaRepository;
 import com.prgjesusindustry.apivendas.services.exceptions.DataIntegrityException;
 import com.prgjesusindustry.apivendas.services.exceptions.ObjectNotFoundException;
@@ -54,6 +55,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy );
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO dto) {
+		return new Categoria(dto.getId(), dto.getNome());
 	}
 
 }
