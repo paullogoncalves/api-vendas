@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.prgjesusindustry.apivendas.domain.Cliente;
 import com.prgjesusindustry.apivendas.dto.ClienteDTO;
+import com.prgjesusindustry.apivendas.dto.ClienteNewDTO;
 import com.prgjesusindustry.apivendas.services.ClienteService;
 
 @RestController
@@ -44,8 +45,17 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+//	@PostMapping
+//	public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteDTO objDto) {
+//		Cliente obj = service.fromDTO(objDto);
+//		obj = service.insert(obj);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+//		return ResponseEntity.created(uri).build();
+//	}
+	
 	@PostMapping
-	public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
