@@ -10,7 +10,7 @@ import com.prgjesusindustry.apivendas.domain.PagamentoComBoleto;
 public class BoletoService {
 	
 	public void preencherPagamentoComBoleto(PagamentoComBoleto pagto, LocalDateTime instantePedido) {
-		LocalDateTime date = instantePedido.plusDays(7);
+		LocalDateTime date = instantePedido.plusDays(7);//adiciona sete dias
 		pagto.setDataVencimento(date);
 	}
 }
