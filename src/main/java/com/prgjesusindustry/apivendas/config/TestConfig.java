@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.prgjesusindustry.apivendas.services.DBService;
+import com.prgjesusindustry.apivendas.services.EmailService;
+import com.prgjesusindustry.apivendas.services.MockEmailService;
 
 @Configuration
 @Profile("test")
@@ -18,6 +20,11 @@ public class TestConfig {
 	public boolean instantiateDataBase() {
 		dbService.instantiateTestDatabase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 	
 	
