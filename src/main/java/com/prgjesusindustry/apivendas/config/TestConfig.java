@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.prgjesusindustry.apivendas.services.DBService;
 import com.prgjesusindustry.apivendas.services.EmailService;
-import com.prgjesusindustry.apivendas.services.MockEmailService;
+import com.prgjesusindustry.apivendas.services.SmtpEmailService;
 
 @Configuration
 @Profile("test")
@@ -24,7 +24,8 @@ public class TestConfig {
 	
 	@Bean
 	public EmailService emailService() {
-		return new MockEmailService();
+		//return new MockEmailService();
+		return new SmtpEmailService();
 	}
 	
 	
