@@ -59,8 +59,6 @@ public abstract class AbstractEmailService implements EmailService{
 	}
 
 	protected MimeMessage prepareMimeMessageFromPedido(Pedido obj) throws MessagingException {
-		//LocaldateTime dateTime = LocalDateTime.now();
-		//LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
 		mmh.setTo(obj.getCliente().getEmail());
