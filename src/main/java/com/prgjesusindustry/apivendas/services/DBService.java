@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.prgjesusindustry.apivendas.domain.Categoria;
@@ -32,6 +33,8 @@ import com.prgjesusindustry.apivendas.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
 
 	@Autowired
 	private CategoriaRepository categoriaRepo;
@@ -117,7 +120,7 @@ public class DBService {
 		estadoRepo.saveAll(Arrays.asList(est1, est2));
 		cidadeRepo.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "prgjesus@gmail.com", "367987600092", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "prgjesus@gmail.com", "367987600092", TipoCliente.PESSOAFISICA, passEncoder.encode("123") );
 
 		cli1.getTelefones().addAll(Arrays.asList("332152453", "998875432"));
 
