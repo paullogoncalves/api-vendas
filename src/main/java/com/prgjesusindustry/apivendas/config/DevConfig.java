@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.prgjesusindustry.apivendas.services.DBService;
 import com.prgjesusindustry.apivendas.services.EmailService;
-import com.prgjesusindustry.apivendas.services.SmtpEmailService;
+import com.prgjesusindustry.apivendas.services.MockEmailService;
 
 @Configuration
 @Profile("dev")
@@ -33,7 +33,7 @@ public class DevConfig {
 	
 //	@Bean
 //	public EmailService emailService() {
-//		//return new MockEmailService();
+//		return new MockEmailService();
 //		return new SmtpEmailService();
 //	}
 	

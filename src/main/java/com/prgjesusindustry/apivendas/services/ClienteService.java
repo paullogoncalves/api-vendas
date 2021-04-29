@@ -27,6 +27,7 @@ import com.prgjesusindustry.apivendas.services.exceptions.ObjectNotFoundExceptio
 
 @Service
 public class ClienteService {
+	
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
 	

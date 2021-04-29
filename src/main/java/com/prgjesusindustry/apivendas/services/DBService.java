@@ -20,6 +20,7 @@ import com.prgjesusindustry.apivendas.domain.PagamentoComCartao;
 import com.prgjesusindustry.apivendas.domain.Pedido;
 import com.prgjesusindustry.apivendas.domain.Produto;
 import com.prgjesusindustry.apivendas.domain.enums.EstadoPagamento;
+import com.prgjesusindustry.apivendas.domain.enums.Perfil;
 import com.prgjesusindustry.apivendas.domain.enums.TipoCliente;
 import com.prgjesusindustry.apivendas.repositories.CategoriaRepository;
 import com.prgjesusindustry.apivendas.repositories.CidadeRepository;
@@ -120,18 +121,23 @@ public class DBService {
 		estadoRepo.saveAll(Arrays.asList(est1, est2));
 		cidadeRepo.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "prgjesus@gmail.com", "367987600092", TipoCliente.PESSOAFISICA, passEncoder.encode("123") );
-
+		Cliente cli1 = new Cliente(null, "Maria Silva", "prgjesus@gmail.com", "367987600092", TipoCliente.PESSOAFISICA, passEncoder.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("332152453", "998875432"));
+		
+		Cliente cli2 = new Cliente(null, "Robson Nonato", "paulodev071@gmail.com", "65940379001", TipoCliente.PESSOAFISICA, passEncoder.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli2.getTelefones().addAll(Arrays.asList("332152453", "998875432"));
 
 		Endereco e1 = new Endereco(null, "Rua das flores", "100", "Casa", "Capmo Grande", "45456-98", cli1, c1);
 		Endereco e2 = new Endereco(null, "Rua são Francisco", "49", "", "Piramboraí", "43213-79", cli1, c2);
+		Endereco e3 = new Endereco(null, "Matias Bastos", "493", "", "Ribeirão", "43213-79", cli2, c2);
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 
-		clienteRepo.save(cli1);
+		clienteRepo.saveAll(Arrays.asList(cli1, cli2) );
 
-		enderecoRepo.saveAll(Arrays.asList(e1, e2));
+		enderecoRepo.saveAll(Arrays.asList(e1, e2, e3));
 
 		DateTimeFormatter formaDt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
