@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.prgjesusindustry.apivendas.security.JWTAuthenticationFilter;
+import com.prgjesusindustry.apivendas.security.JWTAutorizationFilter;
 import com.prgjesusindustry.apivendas.security.JWTUtil;
 
 @Configuration
@@ -58,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		http.addFilter(new JWTAutorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
