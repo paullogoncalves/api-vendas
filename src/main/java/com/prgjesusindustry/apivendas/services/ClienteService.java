@@ -16,11 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.prgjesusindustry.apivendas.domain.Cidade;
 import com.prgjesusindustry.apivendas.domain.Cliente;
 import com.prgjesusindustry.apivendas.domain.Endereco;
+import com.prgjesusindustry.apivendas.domain.enums.Perfil;
 import com.prgjesusindustry.apivendas.domain.enums.TipoCliente;
 import com.prgjesusindustry.apivendas.dto.ClienteDTO;
 import com.prgjesusindustry.apivendas.dto.ClienteNewDTO;
 import com.prgjesusindustry.apivendas.repositories.ClienteRepository;
 import com.prgjesusindustry.apivendas.repositories.EnderecoRepository;
+import com.prgjesusindustry.apivendas.security.UserSS;
+import com.prgjesusindustry.apivendas.services.exceptions.AuthorizationException;
 import com.prgjesusindustry.apivendas.services.exceptions.DataIntegrityException;
 import com.prgjesusindustry.apivendas.services.exceptions.ObjectNotFoundException;
 
@@ -38,8 +41,15 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepo;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user == null ||	!user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "+ id + ", Tipo: " + Cliente.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "+ id 
+				+ ", Tipo: " + Cliente.class.getName()));
 	}
 	
 	@Transactional
